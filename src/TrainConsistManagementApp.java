@@ -1,49 +1,34 @@
-// ===================== UC15 =====================
-// Cargo Safety using Runtime Exception
+// ===================== UC16 =====================
+// Bubble Sort for Bogie Capacities
 
-// Custom Runtime Exception
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
-
-// Goods Bogie class
-class GoodsBogie {
-    String shape;
-    String cargo;
-
-    GoodsBogie(String shape, String cargo) {
-        this.shape = shape;
-        this.cargo = cargo;
-    }
-
-    void validate() {
-        if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
-            throw new CargoSafetyException("Unsafe: Petroleum cannot be in Rectangular bogie");
-        }
-    }
-}
-
-public class UC15_CargoSafety {
+public class UC16_BubbleSort {
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("--- UC15: Cargo Safety Check ---");
+        System.out.println("--- UC16: Bubble Sort ---");
 
-        try {
-            GoodsBogie b = new GoodsBogie("Rectangular", "Petroleum");
-            b.validate();
-            System.out.println("Cargo Assigned Safely");
+        // Array of capacities
+        int[] capacities = {72, 56, 24, 80, 40};
 
-        } catch (CargoSafetyException e) {
-            System.out.println("Error: " + e.getMessage());
+        // Bubble Sort
+        int n = capacities.length;
 
-        } finally {
-            System.out.println("Operation Completed");
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (capacities[j] > capacities[j + 1]) {
+                    // Swap
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
         }
 
-        System.out.println("Program Continues...");
+        // Display sorted array
+        System.out.print("Sorted Capacities: ");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
     }
 }
