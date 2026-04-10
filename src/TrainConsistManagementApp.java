@@ -1,43 +1,49 @@
-// ===================== UC14 =====================
-// Custom Exception for Invalid Capacity
+// ===================== UC15 =====================
+// Cargo Safety using Runtime Exception
 
-// Custom Exception
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) {
+// Custom Runtime Exception
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
         super(message);
     }
 }
 
-// Passenger Bogie class
-class PassengerBogie {
-    String name;
-    int capacity;
+// Goods Bogie class
+class GoodsBogie {
+    String shape;
+    String cargo;
 
-    PassengerBogie(String name, int capacity) throws InvalidCapacityException {
-        if (capacity <= 0) {
-            throw new InvalidCapacityException("Capacity must be greater than 0");
+    GoodsBogie(String shape, String cargo) {
+        this.shape = shape;
+        this.cargo = cargo;
+    }
+
+    void validate() {
+        if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
+            throw new CargoSafetyException("Unsafe: Petroleum cannot be in Rectangular bogie");
         }
-        this.name = name;
-        this.capacity = capacity;
     }
 }
 
-public class UC14_CustomException {
+public class UC15_CargoSafety {
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("--- UC14: Capacity Validation ---");
+        System.out.println("--- UC15: Cargo Safety Check ---");
 
         try {
-            PassengerBogie b1 = new PassengerBogie("Sleeper", 72);
-            System.out.println("Created: " + b1.name);
+            GoodsBogie b = new GoodsBogie("Rectangular", "Petroleum");
+            b.validate();
+            System.out.println("Cargo Assigned Safely");
 
-            PassengerBogie b2 = new PassengerBogie("AC Chair", -10); // invalid
-            System.out.println("Created: " + b2.name);
-
-        } catch (InvalidCapacityException e) {
+        } catch (CargoSafetyException e) {
             System.out.println("Error: " + e.getMessage());
+
+        } finally {
+            System.out.println("Operation Completed");
         }
+
+        System.out.println("Program Continues...");
     }
 }
